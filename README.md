@@ -2,8 +2,6 @@
 
 Automated retrieval, structuring, and documentation of public health data from open sources — built to support reproducible public health intelligence workflows.
 
-\---
-
 ## Overview
 
 This project provides R scripts that automatically fetch, clean, version, and document public health datasets from open APIs. Each script follows a consistent pattern:
@@ -13,41 +11,34 @@ This project provides R scripts that automatically fetch, clean, version, and do
 3. Save output with a dated filename to a structured folder
 4. Update a source documentation sheet automatically
 
-\---
-
 ## Repository Structure
 
 ```
 public-health-data-pipeline/
-├── fetch\_worldbank.R          # World Bank Open Data retrieval script
-├── fetch\_who\_gho.R            # WHO Global Health Observatory retrieval script
+├── fetch_worldbank.R          # World Bank Open Data retrieval script
+├── fetch_who_gho.R            # WHO Global Health Observatory retrieval script
 ├── README.md
 └── data/
     ├── worldbank/
-    │   └── life\_expectancy\_YYYYMMDD.csv
-    └── who\_gho/
-        ├── source\_documentation.csv
-        └── WHOSIS\_000001/
-            └── WHOSIS\_000001\_YYYYMMDD.csv
+    │   └── life_expectancy_YYYYMMDD.csv
+    └── who_gho/
+        ├── source_documentation.csv
+        └── WHOSIS_000001/
+            └── WHOSIS_000001_YYYYMMDD.csv
 ```
 
 > \*\*Note:\*\* The `data/` folder is excluded from version control via `.gitignore`. Run the scripts locally to generate outputs.
-
-\---
 
 ## Data Sources
 
 |Source|Indicator|API|Auth Required|
 |-|-|-|-|
 |World Bank Open Data|Life expectancy at birth (`SP.DYN.LE00.IN`)|REST/JSON|None|
-|WHO Global Health Observatory|Life expectancy at birth (`WHOSIS\_000001`)|OData REST|None|
+|WHO Global Health Observatory|Life expectancy at birth (`WHOSIS_000001`)|OData REST|None|
 
-Source metadata (update frequency, access method, known issues) is automatically logged to `data/who\_gho/source\_documentation.csv` on each run.
-
-\---
+Source metadata (update frequency, access method, known issues) is automatically logged to `data/who_gho/source_documentation.csv` on each run.
 
 ## Getting Started
-
 ### Prerequisites
 
 * [R](https://cran.r-project.org/) (≥ 4.0)
@@ -66,8 +57,8 @@ install.packages(c("httr2", "jsonlite", "readr", "here"))
 Each script is standalone. Run either from RStudio (`Ctrl+Shift+Enter` to source) or from the terminal:
 
 ```bash
-Rscript fetch\_worldbank.R
-Rscript fetch\_who\_gho.R
+Rscript fetch_worldbank.R
+Rscript fetch_who_gho.R
 ```
 
 Expected console output:
@@ -75,20 +66,18 @@ Expected console output:
 ```
 Fetching data from World Bank API...
 Records retrieved: 189
-Saved to: /your/path/data/worldbank/life\_expectancy\_20260711.csv
+Saved to: /your/path/data/worldbank/life_expectancy_20260711.csv
 ```
-
-\---
 
 ## File Naming Convention
 
 All output files follow this pattern:
 
 ```
-{indicator\_or\_source}\_{YYYYMMDD}.csv
+{indicator_or_source}_{YYYYMMDD}.csv
 ```
 
-Example: `life\_expectancy\_20260711.csv`
+Example: `life_expectancy_20260711.csv`
 
 This ensures:
 
@@ -96,24 +85,20 @@ This ensures:
 * **Non-destructive updates** — re-running a script never overwrites previous pulls
 * **Reproducibility** — analysts can reference which snapshot was used in any given report
 
-\---
-
 ## Source Documentation
 
-`fetch\_who\_gho.R` auto-generates and updates a `source\_documentation.csv` with the following fields per indicator:
+`fetch_who_gho.R` auto-generates and updates a `source_documentation.csv` with the following fields per indicator:
 
 |Field|Description|
 |-|-|
-|`indicator\_code`|WHO/World Bank indicator ID|
-|`indicator\_name`|Human-readable indicator name|
-|`source\_url`|API base URL|
-|`access\_method`|How data is accessed (e.g. OData REST, no auth)|
-|`update\_frequency`|How often the source publishes new data|
-|`last\_retrieved`|Date of last successful retrieval|
-|`known\_issues`|Any gaps, lags, or inconsistencies observed|
-|`file\_saved`|Filename of the output saved on this run|
-
-\---
+|`indicator_code`|WHO/World Bank indicator ID|
+|`indicator_name`|Human-readable indicator name|
+|`source_url`|API base URL|
+|`access_method`|How data is accessed (e.g. OData REST, no auth)|
+|`update_frequency`|How often the source publishes new data|
+|`last_retrieved`|Date of last successful retrieval|
+|`known_issues`|Any gaps, lags, or inconsistencies observed|
+|`file_saved`|Filename of the output saved on this run|
 
 ## Dependencies
 
@@ -124,18 +109,14 @@ This ensures:
 |`readr`|Fast, consistent CSV read/write|
 |`here`|Reproducible relative file paths across environments|
 
-\---
-
 ## Extending the Pipeline
 
 To add a new data source:
 
 1. Copy either script as a template
-2. Update the `indicator` and `base\_url` variables
+2. Update the `indicator` and `base_url` variables
 3. Adjust column selection to match the new API's response structure
 4. The folder creation, file naming, and documentation logging will work automatically
-
-\---
 
 ## Relevance to Public Health Intelligence
 
